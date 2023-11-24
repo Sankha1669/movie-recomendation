@@ -29,7 +29,7 @@ const ScrollButton = () => {
 
   return (
     <div
-      className={` scroll-to-top ${isVisible ? "visible" : ""}`}
+      className={` absolute scroll-to-top ${isVisible ? "visible" : ""}`}
       onClick={scrollToTop}
     >
       <i className="fas fa-chevron-up"></i>

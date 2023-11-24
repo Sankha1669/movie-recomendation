@@ -74,7 +74,7 @@ const MovieCard = () => {
           animationStarted ? "animate__animated animate__fadeInUp" : ""
         }`}
       >
-        Most Picks
+        Most Picks 
       </h2>
       <div
         ref={ref}

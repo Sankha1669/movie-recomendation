@@ -1,6 +1,6 @@
 import "./App.css";
-import Slider from "./Components/Slider.js";
 import Home from "./Pages/Home";
+import Discover from "./Pages/Discover";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/discover" element={<Discover />} />
         </Routes>
       </BrowserRouter>
     </>
