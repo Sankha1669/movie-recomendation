@@ -23,78 +23,98 @@ const Discover = () => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
 
-  const fetchMovies = useCallback(async () => {
-    try {
-      const generateMovieTitles = () => {
-        const baseTitles = [
-          "Inception",
-          "The Shawshank Redemption",
-          "The Dark Knight",
-          "Pulp Fiction",
-          "Fight Club",
-          "Forrest Gump",
-          "The Matrix",
-          "The Godfather",
-          "Schindler's List",
-          "Titanic",
-          "Avatar",
-          "Jurassic Park",
-          "The Lord of the Rings",
-          "The Avengers",
-          "The Silence of the Lambs",
-          "The Departed",
-          "Gladiator",
-          "The Social Network",
-          "The Grand Budapest Hotel",
-          "Interstellar",
-          "La La Land",
-          "The Revenant",
-          "Mad Max: Fury Road",
-          "The Shape of Water",
-          "Get Out",
-          "Moonlight",
-          "Birdman",
-          "Whiplash",
-          "Inglourious Basterds",
-        ];
-
-        const filteredTitles = baseTitles.filter((title) =>
-          title.toLowerCase().includes(searchValue.toLowerCase())
-        );
-
-        const additionalTitles = Array.from(
-          { length: 30 - filteredTitles.length },
-          (_, index) => `Movie ${index + 1}`
-        );
-
-        return filteredTitles.concat(additionalTitles);
-      };
-
-      const movieTitles = generateMovieTitles();
-
-      const requests = movieTitles.map((title) =>
-        axios.get(`https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`)
-      );
-
-      const responses = await Promise.all(requests);
-      const fetchedMovies = responses.map((response, index) => ({
-        title: movieTitles[index],
-        movie: response.data,
-      }));
-      setMovies(fetchedMovies || []);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
+  const searchChange = async (name, fetchMovies) => {
+    if (!name.length) {
+      return fetchMovies();
     }
-  }, [searchValue]);
+    const res = await axios.get(
+      `https://www.omdbapi.com/?apikey=${apiKey}&s=${name}`
+    );
+    console.log("searchres\n", res.data);
+    const data = res.data.Search.map((elem) => {
+      return {
+        title: elem.Title,
+        movie: elem,
+      };
+    });
+    setMovies([...data]);
+  };
 
   useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const generateMovieTitles = () => {
+          const baseTitles = [
+            "Inception",
+            "The Shawshank Redemption",
+            "The Dark Knight",
+            "Pulp Fiction",
+            "Logan",
+            "Forrest Gump",
+            "The Matrix",
+            "The Godfather",
+            "Schindler's List",
+            "Titanic",
+            "Avatar",
+            "Jurassic Park",
+            "The Lord of the Rings",
+            "The Avengers",
+            "The Silence of the Lambs",
+            "The Departed",
+            "Gladiator",
+            "The Social Network",
+            "The Grand Budapest Hotel",
+            "Interstellar",
+            "La La Land",
+            "The Revenant",
+            "Mad Max: Fury Road",
+            "The Shape of Water",
+            "Get Out",
+            "Moonlight",
+            "Birdman",
+            "Whiplash",
+            "Inglourious Basterds",
+          ];
+
+          const filteredTitles = baseTitles.filter((title) =>
+            title.toLowerCase().includes(searchValue.toLowerCase())
+          );
+
+          const additionalTitles = Array.from(
+            { length: 30 - filteredTitles.length },
+            (_, index) => `Movie ${index + 1}`
+          );
+
+          return filteredTitles.concat(additionalTitles);
+        };
+
+        const movieTitles = generateMovieTitles();
+        console.log(movieTitles);
+        // const movieTitles = ["Spiderman", "Avtar"];
+        const requests = movieTitles.map((title) =>
+          axios.get(`https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`)
+        );
+
+        const responses = await Promise.all(requests);
+        const fetchedMovies = responses.map((response, index) => ({
+          title: movieTitles[index],
+          movie: response.data,
+        }));
+        console.log("home\n", fetchedMovies);
+        setMovies(fetchedMovies || []);
+        console.log(fetchedMovies);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
     if (inView) {
       setAnimationStarted(true);
       fetchMovies();
     } else {
       setAnimationStarted(false);
     }
-  }, [inView, fetchMovies, searchValue]);
+  }, [inView, searchValue]);
 
   const openModal = (movie) => {
     setSelectedMovie(movie);
@@ -105,35 +125,33 @@ const Discover = () => {
     setModalIsOpen(false);
   };
 
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === "Enter") {
-        // Trigger the movie fetch when Enter is pressed
-        fetchMovies();
-      }
-    };
+  // useEffect(() => {
+  //   const handleKeyPress = (event) => {
+  //     if (event.key === "Enter") {
+  //       // Trigger the movie fetch when Enter is pressed
+  //       fetchMovies();
+  //     }
+  //   };
 
-    document.addEventListener("keydown", handleKeyPress);
+  //   document.addEventListener("keydown", handleKeyPress);
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [searchValue, fetchMovies]);
+  //   return () => {
+  //     document.removeEventListener("keydown", handleKeyPress);
+  //   };
+  // }, [searchValue, fetchMovies]);
 
-  const handleSearch = () => {
+  const handleSearch = (moviename, fetchMovies) => {
     // Trigger the movie fetch when Enter is pressed
     fetchMovies();
-    navigate(`/discover?search=${encodeURIComponent(searchValue)}`);
+    navigate(`/discover?search=${encodeURIComponent(moviename)}`);
   };
 
   return (
     <>
       <Navbar
-        onSearchChange={(value) => {
-          setSearchValue(value);
-        }}
+        setSearchValues={setSearchValue}
         searchValue={searchValue}
-        onSearchEnter={handleSearch}
+        searchChange={searchChange}
       />
       <div className="pb-20 heading">
         <h2
@@ -168,7 +186,12 @@ const Discover = () => {
                 className="rounded movie-poster"
               />
               <div className="movie-info pt-3">
-                <h2 className="text-white flex justify-center movie-title">
+                <h2
+                  className="text-white flex justify-center movie-title whitespace-normal overflow-hidden overflow-ellipsis"
+                  style={{
+                    maxWidth: "200px", // Set a maximum width if needed
+                  }}
+                >
                   {title}
                 </h2>
               </div>

@@ -21,7 +21,7 @@ const FooterComp = () => {
           </NavLink>
           <ul className="flex flex-wrap text-lg items-center mb-6 pr-4 font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
-              <NavLink to="#" className="hover:underline me-4 md:me-6">
+              <NavLink to="/" className="hover:underline me-4 md:me-6">
                 Home
               </NavLink>
             </li>

@@ -28,14 +28,17 @@ const Feedback = () => {
 
       if (response.ok) {
         console.log("Feedback submitted successfully");
-        // Add logic to handle success (e.g., show a success message)
+
+        setFormData({
+          email: "",
+          subject: "",
+          message: "",
+        });
       } else {
         console.error("Failed to submit feedback");
-        // Add logic to handle failure (e.g., show an error message)
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      // Add logic to handle errors
     }
   };
   return (

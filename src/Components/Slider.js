@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 
-import image from "../Images/cropped-1556-880-1332178.jpeg";
-
 export default function Slider() {
-  const slides = [
-    {
-      url: image,
-    },
-    {
-      url: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1661961112951-f2bfd1f253ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80",
-    },
+  const slides = useMemo(
+    () => [
+      {
+        url: require("../Images/cropped-1556-880-1332178.jpeg"),
+      },
+      {
+        url: require("../Images/avengers.jpg"),
+      },
+      {
+        url: require("../Images/loki.jpg"),
+      },
 
-    {
-      url: "https://images.unsplash.com/photo-1512756290469-ec264b7fbf87?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2253&q=80",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2671&q=80",
-    },
-  ];
+      {
+        url: require("../Images/xmen.jpg"),
+      },
+      {
+        url: require("../Images/spiderman.jpg"),
+      },
+    ],
+    []
+  );
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -32,11 +33,11 @@ export default function Slider() {
     setCurrentIndex(newIndex);
   };
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     const isLastSlide = currentIndex === slides.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
-  };
+  }, [currentIndex, slides]);
 
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
@@ -45,12 +46,12 @@ export default function Slider() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       nextSlide();
-    }, 4000); // Change the duration (in milliseconds) as needed
+    }, 4000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [currentIndex]);
+  }, [currentIndex, nextSlide]);
 
   return (
     <div className="max-w-[1556px] h-[880px] w-full m-auto py-16 px-4 relative group">

@@ -1,10 +1,30 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 
-export default function Navbar({ onSearchChange, onSearchEnter }) {
-  const navigate = useNavigate();
+// const apiKey = process.env.REACT_APP_OMDB_API_KEY;
+
+export default function Navbar({ setSearchValues, searchChange }) {
+  // const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+
+  // const searchChange = async (name) => {
+  //   // if (!name.length) {
+  //   //   return fetchMovies();
+  //   // }
+  //   const res = await axios.get(
+  //     `https://www.omdbapi.com/?apikey=${apiKey}&s=${name}`
+  //   );
+  //   console.log("searchres\n", res.data);
+  //   const data = res.data.Search.map((elem) => {
+  //     return {
+  //       title: elem.Title,
+  //       movie: elem,
+  //     };
+  //   });
+  //   setMovies([...data]);
+  // };
 
   return (
     <nav className=" max-w-screen-3xl bg-gray-700 border-gray-200 dark:bg-gray-900">
@@ -75,8 +95,8 @@ export default function Navbar({ onSearchChange, onSearchEnter }) {
               onChange={(e) => setSearchValue(e.target.value)}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
-                  onSearchChange(searchValue);
-                  onSearchEnter();
+                  // setSearchValues(searchValue);
+                  searchChange(searchValue);
                 }
               }}
             />
