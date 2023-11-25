@@ -36,8 +36,8 @@ const FooterComp = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="#" className="hover:underline">
-                Contact
+              <NavLink to="/discover" className="hover:underline">
+                Discover
               </NavLink>
             </li>
           </ul>

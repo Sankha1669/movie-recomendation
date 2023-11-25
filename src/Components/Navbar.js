@@ -173,7 +173,7 @@ export default function Navbar({ setSearchValues, searchChange }) {
                 Discover
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <button
                 id="dropdownNavbarLink"
                 data-dropdown-toggle="dropdownNavbar"
@@ -238,7 +238,7 @@ export default function Navbar({ setSearchValues, searchChange }) {
                   </NavLink>
                 </div>
               </div>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

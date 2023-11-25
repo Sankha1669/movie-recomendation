@@ -10,9 +10,14 @@ const PORT = process.env.PORT || 5000;
 app.use(cors("*"));
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/feedbackdb").then(() => {
-  console.log("Database connected successfully.");
-});
+mongoose
+  .connect("mongodb://localhost:27017/feedbackdb")
+  .then(() => {
+    console.log("Database connected successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });
 
 const feedbackSchema = new Schema({
   email: String,

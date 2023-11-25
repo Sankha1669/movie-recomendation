@@ -48,9 +48,9 @@ const Discover = () => {
             "Inception",
             "The Shawshank Redemption",
             "The Dark Knight",
-            "Pulp Fiction",
+            "Ted",
             "Logan",
-            "Forrest Gump",
+            "Crazy, Stupid, Love",
             "The Matrix",
             "The Godfather",
             "Schindler's List",
@@ -74,6 +74,7 @@ const Discover = () => {
             "Birdman",
             "Whiplash",
             "Inglourious Basterds",
+            "The Hangover",
           ];
 
           const filteredTitles = baseTitles.filter((title) =>
