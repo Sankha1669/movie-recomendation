@@ -110,8 +110,9 @@ const MovieCard = () => {
           <p>{selectedMovie.movie.Plot}</p>
           <p>IMDb Rating: {selectedMovie.movie.imdbRating}</p>
           <div>
-            <button>Netflix</button>
-            <button>Prime Video</button>
+            <button> Netflix </button>
+        
+            <button> Prime Video </button>
             {/* Add more buttons for other OTT platforms */}
           </div>
           <button onClick={closeModal}>Close</button>
